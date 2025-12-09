@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TaskFilterProps, TaskStatus } from "../../types";
+import type { TaskFilterProps, TaskStatus } from "../../types";
 
 const TaskFilter: React.FC<TaskFilterProps> = ({ onFilterChange }) => {
   const [selectedStatus, setSelectedStatus] = useState<TaskStatus | "all">(

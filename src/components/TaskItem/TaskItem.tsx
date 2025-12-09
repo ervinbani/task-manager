@@ -1,9 +1,13 @@
-import { TaskItemProps, TaskStatus } from "../../types";
+import type { TaskItemPropsExtended, TaskStatus } from "../../types";
 
-const TaskItem: React.FC<TaskItemProps> = ({
+const TaskItem: React.FC<TaskItemPropsExtended> = ({
   task,
   onStatusChange,
   onDelete,
+  onMoveUp,
+  onMoveDown,
+  isFirst,
+  isLast,
 }) => {
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onStatusChange(task.id, e.target.value as TaskStatus);
@@ -60,6 +64,27 @@ const TaskItem: React.FC<TaskItemProps> = ({
       </div>
 
       <div className="task-actions">
+        <div className="move-buttons">
+          <button
+            onClick={() => onMoveUp(task.id)}
+            className="move-button"
+            disabled={isFirst}
+            aria-label="Move task up"
+            title="Move up"
+          >
+            ⬆️
+          </button>
+          <button
+            onClick={() => onMoveDown(task.id)}
+            className="move-button"
+            disabled={isLast}
+            aria-label="Move task down"
+            title="Move down"
+          >
+            ⬇️
+          </button>
+        </div>
+
         <select
           value={task.status}
           onChange={handleStatusChange}

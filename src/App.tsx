@@ -2,29 +2,9 @@ import { useState, useMemo } from "react";
 import "./App.css";
 import TaskList from "./components/TaskList/TaskList";
 import TaskFilter from "./components/TaskFilter/TaskFilter";
-import { Task, TaskStatus } from "./types";
+import TaskForm from "./components/TaskForm/TaskForm";
+import type { Task, TaskStatus } from "./types";
 
-/**
- * App Component - Main Container
- *
- * Component Composition Architecture:
- *
- * App (State Management & Business Logic)
- *  ├─ TaskFilter (Filter Controls)
- *  │   └─ Emits: onFilterChange(filters)
- *  │
- *  └─ TaskList (List Container)
- *      └─ TaskItem[] (Individual Task Cards)
- *          ├─ Emits: onStatusChange(taskId, status)
- *          └─ Emits: onDelete(taskId)
- *
- * Data Flow:
- * 1. User interacts with TaskFilter → calls handleFilterChange
- * 2. Filters update → filteredTasks recomputed via useMemo
- * 3. TaskList receives filtered tasks → renders TaskItem components
- * 4. User changes status in TaskItem → calls handleStatusChange
- * 5. State updates → re-render with new data
- */
 function App() {
   const [tasks, setTasks] = useState<Task[]>([
     {
@@ -58,6 +38,9 @@ function App() {
     priority?: "low" | "medium" | "high";
   }>({});
 
+  const [showForm, setShowForm] = useState(false);
+  const [sortByDate, setSortByDate] = useState(false);
+
   const handleStatusChange = (taskId: string, newStatus: TaskStatus) => {
     setTasks(
       tasks.map((task) =>
@@ -77,8 +60,41 @@ function App() {
     setFilters(newFilters);
   };
 
+  const handleAddTask = (newTask: Task) => {
+    setTasks([...tasks, newTask]);
+    setShowForm(false);
+  };
+
+  const handleSortByDate = () => {
+    setSortByDate(!sortByDate);
+  };
+
+  const handleMoveUp = (taskId: string) => {
+    const index = tasks.findIndex((task) => task.id === taskId);
+    if (index > 0) {
+      const newTasks = [...tasks];
+      [newTasks[index - 1], newTasks[index]] = [
+        newTasks[index],
+        newTasks[index - 1],
+      ];
+      setTasks(newTasks);
+    }
+  };
+
+  const handleMoveDown = (taskId: string) => {
+    const index = tasks.findIndex((task) => task.id === taskId);
+    if (index < tasks.length - 1) {
+      const newTasks = [...tasks];
+      [newTasks[index], newTasks[index + 1]] = [
+        newTasks[index + 1],
+        newTasks[index],
+      ];
+      setTasks(newTasks);
+    }
+  };
+
   const filteredTasks = useMemo(() => {
-    return tasks.filter((task) => {
+    let filtered = tasks.filter((task) => {
       if (filters.status && task.status !== filters.status) {
         return false;
       }
@@ -87,7 +103,15 @@ function App() {
       }
       return true;
     });
-  }, [tasks, filters]);
+
+    if (sortByDate) {
+      filtered = [...filtered].sort(
+        (a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+      );
+    }
+
+    return filtered;
+  }, [tasks, filters, sortByDate]);
 
   return (
     <div className="app">
@@ -102,8 +126,19 @@ function App() {
           tasks={filteredTasks}
           onStatusChange={handleStatusChange}
           onDelete={handleDelete}
+          onAddTask={() => setShowForm(true)}
+          onSortByDate={handleSortByDate}
+          onMoveUp={handleMoveUp}
+          onMoveDown={handleMoveDown}
         />
       </main>
+
+      {showForm && (
+        <TaskForm
+          onAddTask={handleAddTask}
+          onCancel={() => setShowForm(false)}
+        />
+      )}
     </div>
   );
 }

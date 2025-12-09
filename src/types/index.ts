@@ -29,3 +29,22 @@ export interface TaskFilterProps {
     priority?: "low" | "medium" | "high";
   }) => void;
 }
+
+export interface TaskFormProps {
+  onAddTask: (task: Task) => void;
+  onCancel: () => void;
+}
+
+export interface TaskListPropsExtended extends TaskListProps {
+  onAddTask: () => void;
+  onSortByDate: () => void;
+  onMoveUp: (taskId: string) => void;
+  onMoveDown: (taskId: string) => void;
+}
+
+export interface TaskItemPropsExtended extends TaskItemProps {
+  onMoveUp: (taskId: string) => void;
+  onMoveDown: (taskId: string) => void;
+  isFirst: boolean;
+  isLast: boolean;
+}
