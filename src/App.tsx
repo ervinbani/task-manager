@@ -1,12 +1,23 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import "./App.css";
 import TaskList from "./components/TaskList/TaskList";
 import TaskFilter from "./components/TaskFilter/TaskFilter";
 import TaskForm from "./components/TaskForm/TaskForm";
 import type { Task, TaskStatus } from "./types";
 
-function App() {
-  const [tasks, setTasks] = useState<Task[]>([
+const STORAGE_KEY = "task-manager-tasks";
+
+const getInitialTasks = (): Task[] => {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) {
+    try {
+      return JSON.parse(stored);
+    } catch (error) {
+      console.error("Failed to parse stored tasks:", error);
+    }
+  }
+  // Default tasks if nothing in localStorage
+  return [
     {
       id: "1",
       title: "Complete project proposal",
@@ -31,7 +42,11 @@ function App() {
       priority: "low",
       dueDate: "2025-12-05",
     },
-  ]);
+  ];
+};
+
+function App() {
+  const [tasks, setTasks] = useState<Task[]>(getInitialTasks);
 
   const [filters, setFilters] = useState<{
     status?: TaskStatus;
@@ -40,6 +55,11 @@ function App() {
 
   const [showForm, setShowForm] = useState(false);
   const [sortByDate, setSortByDate] = useState(false);
+
+  // Save tasks to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+  }, [tasks]);
 
   const handleStatusChange = (taskId: string, newStatus: TaskStatus) => {
     setTasks(

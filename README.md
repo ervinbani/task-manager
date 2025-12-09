@@ -13,6 +13,7 @@ A modern, feature-rich task management application built with React, TypeScript,
 - 🔍 **Advanced Filtering**: Filter tasks by status and priority
 - 📊 **Sort by Date**: Sort tasks by due date in ascending order
 - ⬆️⬇️ **Task Reordering**: Move tasks up and down in the list
+- 💾 **LocalStorage Persistence**: Tasks automatically saved and restored across sessions
 
 ### User Experience
 
@@ -30,6 +31,7 @@ A modern, feature-rich task management application built with React, TypeScript,
 - ⚡ **Performance Optimized**: Uses `useMemo` for efficient filtering
 - 🎭 **Modal Forms**: Overlay form for task creation
 - 🔒 **Type Safety**: Strict TypeScript configuration
+- 💾 **Data Persistence**: Browser localStorage for automatic saving
 
 ## 📁 Project Structure
 
@@ -215,60 +217,3 @@ Used immutable state updates with `.map()` to create a new array, updating only 
 - **Completed task styling**: Applied conditional CSS classes and strikethrough based on status
 
 ---
-
-**Happy Task Managing! 📝✨**
-{
-files: ['**/*.{ts,tsx}'],
-extends: [
-// Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-
-},
-])
-
-````
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-````
