@@ -2,13 +2,17 @@ import { useState } from "react";
 import { TaskFilterProps, TaskStatus } from "../../types";
 
 const TaskFilter: React.FC<TaskFilterProps> = ({ onFilterChange }) => {
-  const [selectedStatus, setSelectedStatus] = useState<TaskStatus | "all">("all");
-  const [selectedPriority, setSelectedPriority] = useState<"low" | "medium" | "high" | "all">("all");
+  const [selectedStatus, setSelectedStatus] = useState<TaskStatus | "all">(
+    "all"
+  );
+  const [selectedPriority, setSelectedPriority] = useState<
+    "low" | "medium" | "high" | "all"
+  >("all");
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const status = e.target.value as TaskStatus | "all";
     setSelectedStatus(status);
-    
+
     onFilterChange({
       status: status === "all" ? undefined : status,
       priority: selectedPriority === "all" ? undefined : selectedPriority,
@@ -18,7 +22,7 @@ const TaskFilter: React.FC<TaskFilterProps> = ({ onFilterChange }) => {
   const handlePriorityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const priority = e.target.value as "low" | "medium" | "high" | "all";
     setSelectedPriority(priority);
-    
+
     onFilterChange({
       status: selectedStatus === "all" ? undefined : selectedStatus,
       priority: priority === "all" ? undefined : priority,
@@ -31,12 +35,13 @@ const TaskFilter: React.FC<TaskFilterProps> = ({ onFilterChange }) => {
     onFilterChange({});
   };
 
-  const hasActiveFilters = selectedStatus !== "all" || selectedPriority !== "all";
+  const hasActiveFilters =
+    selectedStatus !== "all" || selectedPriority !== "all";
 
   return (
     <div className="task-filter">
       <h3>Filter Tasks</h3>
-      
+
       <div className="filter-controls">
         <div className="filter-group">
           <label htmlFor="status-filter">Status:</label>

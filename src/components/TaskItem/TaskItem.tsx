@@ -1,6 +1,10 @@
 import { TaskItemProps, TaskStatus } from "../../types";
 
-const TaskItem: React.FC<TaskItemProps> = ({ task, onStatusChange, onDelete }) => {
+const TaskItem: React.FC<TaskItemProps> = ({
+  task,
+  onStatusChange,
+  onDelete,
+}) => {
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onStatusChange(task.id, e.target.value as TaskStatus);
   };
@@ -45,9 +49,9 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onStatusChange, onDelete }) =
           {task.priority}
         </span>
       </div>
-      
+
       <p className="task-description">{task.description}</p>
-      
+
       <div className="task-meta">
         <span className="task-due-date">
           Due: {new Date(task.dueDate).toLocaleDateString()}
@@ -65,7 +69,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onStatusChange, onDelete }) =
           <option value="in-progress">In Progress</option>
           <option value="completed">Completed</option>
         </select>
-        
+
         <button
           onClick={() => onDelete(task.id)}
           className="delete-button"
