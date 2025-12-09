@@ -5,6 +5,7 @@ A modern, feature-rich task management application built with React, TypeScript,
 ## 🚀 Features
 
 ### Core Functionality
+
 - ✅ **Task Management**: Create, read, update, and delete tasks
 - 🔄 **Status Tracking**: Track task status (Pending, In Progress, Completed)
 - 🎯 **Priority Levels**: Organize tasks by priority (Low, Medium, High)
@@ -14,6 +15,7 @@ A modern, feature-rich task management application built with React, TypeScript,
 - ⬆️⬇️ **Task Reordering**: Move tasks up and down in the list
 
 ### User Experience
+
 - 🎨 **Visual Feedback**: Color-coded status and priority indicators
 - ⚠️ **Overdue Alerts**: Animated warning badges for overdue tasks
 - 📱 **Responsive Design**: Works seamlessly on desktop and mobile devices
@@ -22,6 +24,7 @@ A modern, feature-rich task management application built with React, TypeScript,
 - 🖱️ **Intuitive UI**: Hover states and visual feedback on all interactive elements
 
 ### Technical Highlights
+
 - 💪 **TypeScript**: Fully typed components and interfaces
 - 🏗️ **Component Architecture**: Clean separation of concerns
 - ⚡ **Performance Optimized**: Uses `useMemo` for efficient filtering
@@ -58,17 +61,20 @@ src/
 ## 📦 Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/ervinbani/task-manager.git
 cd task-manager
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -78,6 +84,7 @@ npm run dev
 ## 🎮 Usage
 
 ### Creating a Task
+
 1. Click the **"➕ Add New Task"** button
 2. Fill in the task details:
    - Title (required)
@@ -88,6 +95,7 @@ npm run dev
 3. Click **"Add Task"** to create or **"Cancel"** to close
 
 ### Managing Tasks
+
 - **Change Status**: Use the dropdown in each task card
 - **Delete Task**: Click the **"Delete"** button
 - **Reorder Tasks**: Use the ⬆️ and ⬇️ buttons to move tasks
@@ -95,6 +103,7 @@ npm run dev
 - **Sort Tasks**: Click **"📅 Sort by Date"** to sort by due date
 
 ### Visual Indicators
+
 - **Status Colors**:
   - 🟠 Orange border = Pending
   - 🔵 Blue border = In Progress
@@ -108,6 +117,7 @@ npm run dev
 ## 🏗️ Component Architecture
 
 ### Data Flow
+
 ```
 App (State Management)
  ├─ TaskFilter (Filter Controls)
@@ -125,6 +135,7 @@ TaskForm (Modal Overlay)
 ```
 
 ### Key Patterns
+
 - **Prop Drilling**: Event handlers passed through component hierarchy
 - **Controlled Components**: Form inputs managed by React state
 - **Conditional Rendering**: Empty states, disabled buttons, overdue badges
@@ -151,6 +162,7 @@ TaskForm (Modal Overlay)
 ## 🔧 Configuration
 
 The project uses:
+
 - **TypeScript**: Strict mode enabled with `verbatimModuleSyntax`
 - **ESLint**: React hooks and TypeScript rules
 - **Vite**: Fast HMR and optimized builds
@@ -167,6 +179,7 @@ This project is open source and available under the MIT License.
 ## 👨‍💻 Author
 
 **Ervin Bani**
+
 - GitHub: [@ervinbani](https://github.com/ervinbani)
 
 ## 🙏 Acknowledgments
@@ -175,13 +188,39 @@ This project is open source and available under the MIT License.
 - Design inspired by modern task management applications
 - Icons: Unicode emojis for lightweight performance
 
+## 💭 Reflection Questions
+
+### How did you ensure unique keys for your list items?
+
+Each task has a unique `id` property (string type) generated using `Date.now().toString()` for new tasks. This ID is used as the `key` prop in the `.map()` function when rendering the TaskItem components.
+
+### What considerations did you make when implementing the filtering functionality?
+
+- Used `useMemo` to avoid unnecessary recalculations on every render
+- Implemented multi-criteria filtering (status AND priority)
+- Maintained original task order while filtering
+- Ensured filtered results update reactively when tasks or filters change
+- Added dependency array `[tasks, filters, sortByDate]` to optimize performance
+
+### How did you handle state updates for task status changes?
+
+Used immutable state updates with `.map()` to create a new array, updating only the specific task that matches the `taskId`. The pattern: `tasks.map(task => task.id === taskId ? { ...task, status: newStatus } : task)` ensures React detects the change and re-renders efficiently.
+
+### What challenges did you face when implementing conditional rendering?
+
+- **Empty states**: Showed different UI when task list is empty vs populated
+- **Disabled buttons**: Move up/down buttons needed to check if task is first/last in list
+- **Overdue badges**: Required date comparison logic and status checking
+- **Filter reset button**: Only displayed when filters are actively applied
+- **Completed task styling**: Applied conditional CSS classes and strikethrough based on status
+
 ---
 
 **Happy Task Managing! 📝✨**
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+{
+files: ['**/*.{ts,tsx}'],
+extends: [
+// Other configs...
 
       // Remove tseslint.configs.recommended and replace with this
       tseslint.configs.recommendedTypeChecked,
@@ -199,9 +238,11 @@ This project is open source and available under the MIT License.
       },
       // other options...
     },
-  },
+
+},
 ])
-```
+
+````
 
 You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
@@ -230,4 +271,4 @@ export default defineConfig([
     },
   },
 ])
-```
+````
