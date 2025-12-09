@@ -4,6 +4,27 @@ import TaskList from "./components/TaskList/TaskList";
 import TaskFilter from "./components/TaskFilter/TaskFilter";
 import { Task, TaskStatus } from "./types";
 
+/**
+ * App Component - Main Container
+ *
+ * Component Composition Architecture:
+ *
+ * App (State Management & Business Logic)
+ *  ├─ TaskFilter (Filter Controls)
+ *  │   └─ Emits: onFilterChange(filters)
+ *  │
+ *  └─ TaskList (List Container)
+ *      └─ TaskItem[] (Individual Task Cards)
+ *          ├─ Emits: onStatusChange(taskId, status)
+ *          └─ Emits: onDelete(taskId)
+ *
+ * Data Flow:
+ * 1. User interacts with TaskFilter → calls handleFilterChange
+ * 2. Filters update → filteredTasks recomputed via useMemo
+ * 3. TaskList receives filtered tasks → renders TaskItem components
+ * 4. User changes status in TaskItem → calls handleStatusChange
+ * 5. State updates → re-render with new data
+ */
 function App() {
   const [tasks, setTasks] = useState<Task[]>([
     {
