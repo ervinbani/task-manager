@@ -38,6 +38,32 @@ const TaskFilter: React.FC<TaskFilterProps> = ({ onFilterChange }) => {
   const hasActiveFilters =
     selectedStatus !== "all" || selectedPriority !== "all";
 
+  const getStatusClass = () => {
+    switch (selectedStatus) {
+      case "pending":
+        return "filter-status-pending";
+      case "in-progress":
+        return "filter-status-in-progress";
+      case "completed":
+        return "filter-status-completed";
+      default:
+        return "";
+    }
+  };
+
+  const getPriorityClass = () => {
+    switch (selectedPriority) {
+      case "high":
+        return "filter-priority-high";
+      case "medium":
+        return "filter-priority-medium";
+      case "low":
+        return "filter-priority-low";
+      default:
+        return "";
+    }
+  };
+
   return (
     <div className="task-filter">
       <h3>Filter Tasks</h3>
@@ -49,7 +75,7 @@ const TaskFilter: React.FC<TaskFilterProps> = ({ onFilterChange }) => {
             id="status-filter"
             value={selectedStatus}
             onChange={handleStatusChange}
-            className="filter-select"
+            className={`filter-select ${getStatusClass()}`}
           >
             <option value="all">All Statuses</option>
             <option value="pending">Pending</option>
@@ -64,7 +90,7 @@ const TaskFilter: React.FC<TaskFilterProps> = ({ onFilterChange }) => {
             id="priority-filter"
             value={selectedPriority}
             onChange={handlePriorityChange}
-            className="filter-select"
+            className={`filter-select ${getPriorityClass()}`}
           >
             <option value="all">All Priorities</option>
             <option value="low">Low</option>

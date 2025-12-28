@@ -108,6 +108,50 @@
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
+/* Dynamic Filter Status Colors */
+.filter-select.filter-status-pending {
+  border-color: #ff9800;
+  background: linear-gradient(to right, rgba(255, 152, 0, 0.1) 0%, white 20%);
+  font-weight: 600;
+  color: #f57c00;
+}
+
+.filter-select.filter-status-in-progress {
+  border-color: #2196f3;
+  background: linear-gradient(to right, rgba(33, 150, 243, 0.1) 0%, white 20%);
+  font-weight: 600;
+  color: #1976d2;
+}
+
+.filter-select.filter-status-completed {
+  border-color: #4caf50;
+  background: linear-gradient(to right, rgba(76, 175, 80, 0.1) 0%, white 20%);
+  font-weight: 600;
+  color: #388e3c;
+}
+
+/* Dynamic Filter Priority Colors */
+.filter-select.filter-priority-high {
+  border-color: #f44336;
+  background: linear-gradient(to right, rgba(244, 67, 54, 0.1) 0%, white 20%);
+  font-weight: 600;
+  color: #d32f2f;
+}
+
+.filter-select.filter-priority-medium {
+  border-color: #ff9800;
+  background: linear-gradient(to right, rgba(255, 152, 0, 0.1) 0%, white 20%);
+  font-weight: 600;
+  color: #f57c00;
+}
+
+.filter-select.filter-priority-low {
+  border-color: #9e9e9e;
+  background: linear-gradient(to right, rgba(158, 158, 158, 0.1) 0%, white 20%);
+  font-weight: 600;
+  color: #616161;
+}
+
 .reset-button {
   padding: 0.6rem 1.5rem;
   background: #f44336;
